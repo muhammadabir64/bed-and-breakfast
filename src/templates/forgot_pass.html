@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}B&B{% endblock title %}
+{% include "navbar.html" %}
+{% block content %}
+
+<div class="container" style="margin-top: 100px;">
+<div class="row my-5">
+
+<div class="col-12 text-center">
+{% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+<div class="alert alert-danger text-center alter-dismissable fade show" role="alert">
+{{ message }}
+<button type="button" class="close" data-dismiss="alert">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+{% else %}
+<div class="alert alert-success text-center alter-dismissable fade show" role="alert">
+{{ message }}
+<button type="button" class="close" data-dismiss="alert">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+{% endif %} {% endfor %} {% endif %} {% endwith %}
+<h5 class="text-center my-2">Recover Password</h5>
+<p>Please enter your email below, and we will send you a password reset link.</p>
+</div>
+<div class="col-12">
+  <div class="modal-content mx-auto" style="width: 350px;">
+    <!--Header-->
+    
+    <div class="modal-header mx-auto">
+      <img src="{{ url_for('static', filename='img/pass_recovery.png') }}" class="img-responsive" style="width: 85px;">
+    </div>
+    <!--Body-->
+    <div class="modal-body text-center mb-1">
+<form action="{{ url_for('auth.reset_password') }}" method="POST">
+      <div class="md-form ml-0 mr-0">
+        <input type="email" name="email" class="form-control form-control-sm validate ml-0" id="email" required>
+        <label data-error="wrong" data-success="right" for="email" class="ml-0">Your email address</label>
+      </div>
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-danger btn-rounded mt-1">Send Reset Email</button>
+      </div>
+</form>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+{% endblock content %}

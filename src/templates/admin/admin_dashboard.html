@@ -1,0 +1,141 @@
+{% extends "admin/base.html" %}
+{% block title %}B&amp;B | Admin{% endblock title %}
+{% block body_content %}
+
+<div id="main">
+<div class="row">    
+<div class="col s12">
+<div class="container">
+<!--page content :start-->
+<section>
+	<div id="card-stats" class="pt-0">
+	      <div class="row">
+	         <div class="col l4 m4 s6">
+	            <div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft">
+	               <div class="padding-4">
+	                  <div class="row">
+	                     <div class="col s7 m7">
+	                        <i class="material-icons background-round mt-5">home</i>
+	                        <p>Rooms</p>
+	                     </div>
+	                     <div class="col s5 m5 right-align">
+	                        <h5 class="mb-0 white-text">{{ booking_count }}</h5>
+	                        <p class="no-margin">Reserved</p>
+	                        <p>{{ rooms_count }}</p>
+	                     </div>
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	         <div class="col l4 m4 s6">
+	            <div class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeLeft">
+	               <div class="padding-4">
+	                  <div class="row">
+	                     <div class="col s7 m7">
+	                        <i class="material-icons background-round mt-5">perm_identity</i>
+	                        <p>Users</p>
+	                     </div>
+	                     <div class="col s5 m5 right-align">
+	                        <h5 class="mb-0 white-text">{{ admin_count }}</h5>
+	                        <p class="no-margin">Admin</p>
+	                        <p>{{ users_count }}</p>
+	                     </div>
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	         <div class="col l4 m4 s12">
+	            <div class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text animate fadeRight" style="background: linear-gradient(45deg,#43a047,#4ba58e)!important">
+	               <div class="padding-4">
+	                  <div class="row">
+	                     <div class="col s7 m7">
+	                        <i class="material-icons background-round mt-5">local_atm</i>
+	                        <p>Earning</p>
+	                     </div>
+	                     <div class="col s5 m5 right-align">
+	                        <h5 class="mb-0 white-text">&euro;{{ daily_earn.earning }}</h5>
+	                        <p class="no-margin">Today</p>
+	                        <p>&euro;{{ dashboard_info.total_earning }}</p>
+	                     </div>
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	         
+	      </div>
+	   </div>
+</section>
+<section>
+<div class="row">
+      <div class="col s12">
+         <div class="card-panel animate fadeRight">
+            <div class="card-content pb-1">
+               <h6 class="card-title mb-0">Reserved Rooms</h6>
+               <div class="divider" style="width: 140px; margin-top: 12px;"></div>
+            </div>
+            <table class="highlight">
+               <thead>
+                  <tr>
+                     <th>#</th>
+                     <th>User</th>
+                     <th>Room</th>
+                     <th>Check in</th>
+                     <th>Check out</th>
+                  </tr>
+               </thead>
+               <tbody>
+               	{% if room_reserved_list %}
+               	{% for reserved_room in room_reserved_list %}
+                  <tr>
+                  	<td>{{ reserved_room.id }}</td>
+                  	<td>{{ reserved_room.reserved_by_user }}</td>
+                  	<td>{{ reserved_room.reserved_room_title }}</td>
+                  	<td>{{ reserved_room.chk_in_full }}</td>
+                  	<td>{{ reserved_room.chk_out_full }}</td>
+                  </tr>
+                 {% endfor %}
+                 {% else %}
+                 	<tr>
+                 		<td></td>
+                 		<td></td>
+                 		<td class="center"><span class="red-text">no data available</span></td>
+                 		<td></td>
+                 		<td></td>
+                 	</tr>
+                 {% endif %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</section>
+<!--page content :end-->
+</div>
+</div>
+</div>
+</div>
+
+<div id="more_regions" class="modal">
+<div class="modal-content">
+<div class="row">
+<div class="col s12">
+<table class="striped">
+<thead>
+	<tr>
+		<th>Recent</th>
+		<th>Most Visits</th>
+	</tr>
+</thead>
+<tbody>
+<tr>
+	<td>Iraq</td>
+	<td class="blue-text text-darken-1">125</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock body_content %}

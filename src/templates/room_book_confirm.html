@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}B&B{% endblock title %}
+{% include "navbar.html" %}
+{% block content %}
+
+<div class="container" style="margin-top: 100px;">
+<div class="row my-5">
+
+<div class="card p-4 mx-auto">
+    <h3 class="font-weight-bold text-center text-info">Billing Confirmation</h3>
+    <hr class="mb-5 mx-auto" width="25px">
+<div class="row">
+<div class="col-lg-6 mb-4">
+<img src="{{ url_for('static', filename='img/admin_rooms/') }}{{ room_data.thumb }}" class="img-fluid rounded z-depth-2">
+</div>
+<div class="col-lg-5 text-center text-md-left">
+<div class="mb-4">
+  <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+    <strong>{{ room_data.title }}</strong>
+  </h2>
+</div>
+<div class="card-body">
+<table style="color: #6f6f6f; line-height: 20px; border-collapse: separate;">
+<tbody>
+  <tr>
+    <td class="font-weight-bold">Name</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.fname }} {{ user_data.lname }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Gender</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.gender }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Birth</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.date_of_birth }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Email</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.email }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Phone</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.phone }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Country</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.country }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">City</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.city }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Zip</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td>{{ user_data.zip_code }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">Address</td>
+    <td class="font-weight-bold px-2">:</td>
+    <td style="overflow-wrap: anywhere">{{ user_data.address }}</td>
+  </tr>
+</tbody>
+</table>
+<hr width="25px;">
+<table style="color: #6f6f6f; line-height: 20px; border-collapse: separate;">
+<tbody>
+  <tr>
+    <td class="font-weight-bold"><i class="fas fa-money-check-alt"></i> Total cost</td>
+    <td class="px-2">:</td>
+    <td>&euro;{{ room_data.price }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold"><i class="fas fa-bed"></i> Bed</td>
+    <td class="px-2">:</td>
+    <td>{{ room_data.bed }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold"><i class="fas fa-utensils"></i> Lunch</td>
+    <td class="px-2">:</td>
+    <td>{{ room_data.lunch }} times</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold"><i class="fas fa-hiking"></i> Check in</td>
+    <td class="px-2">:</td>
+    <td>{{ check_in }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold"><i class="fas fa-door-open"></i> Check out</td>
+    <td class="px-2">:</td>
+    <td>{{ check_out }}</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold"><i class="fas fa-cloud-sun"></i> Total</td>
+    <td class="px-2">:</td>
+    <td>{{ totalDays }} days</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+        <section>
+          <div class="mt-5">
+            <div class="row mt-3">
+              <div class="col-md-12 text-center text-md-left text-md-right">
+<form action="{{ url_for('views.room_book_payment') }}" method="POST">
+<input type="hidden" name="user_id" value="{{ user.id }}">
+<input type="hidden" name="room_id" value="{{ room_data.id }}">
+<input type="hidden" name="price" value="{{ room_data.price }}">
+<input type="hidden" name="check_in" value="{{ check_in }}">
+<input type="hidden" name="email" value="{{ user.email }}">
+<input type="hidden" name="check_out" value="{{ check_out }}">
+<input type="hidden" name="description" value="{{ user.fname }} has reserved {{ room_data.title }}">
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ key }}"
+          data-name="{{ room_data.title }}"
+          data-image="{{ url_for('static', filename='img/user_avatars/') }}{{ user.avatar }}"
+          data-amount="{{ room_data.price }}00"
+          data-currency="eur"
+          data-locale="auto"></script>
+<button type="submit" class="btn btn-primary btn-rounded">
+<i class="fas fa-money-bill mr-2"></i> Confirm &amp; Pay &euro;{{ room_data.price }}</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+      </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock content %}

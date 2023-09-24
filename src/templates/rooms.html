@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}B&B{% endblock title %}
+{% include "navbar.html" %}
+{% block content %}
+
+<div class="container" style="margin-top: 100px;">
+<h3 class="text-center">Available Rooms</h3>
+<hr class="mx-auto w-25 mb-5">
+<div class="row">
+{% for data in room %}
+<div class="col-md-6 col-lg-4">
+   <div class="card card-personal mb-4">
+      <div class="view overlay">
+         <img class="card-img-top" src="{{ url_for('static', filename='img/admin_rooms/') }}{{ data.thumb }}">         
+      </div>
+      <div class="card-body">
+            <h5 class="font-weight-bold text-uppercase">
+               <strong>{{ data.title }}</strong>
+            </h5>
+         <span class="badge badge-info px-3 py-2" style="font-size: 15px;">&euro;{{ data.price }}</span>
+         <p class="grey-text mt-2">{{ data.description|truncate(85) }}</p>
+         <div class="row">
+            <div class="col-lg-4 col-md-12 text-center">
+               <p class="dark-grey-text">
+                  <i class="fas fa-hotel dark-grey-text" aria-hidden="true"></i> {{ data.bed }} Bed
+               </p>
+            </div>
+            <div class="col-lg-4 col-md-12 text-center">
+               <p class="dark-grey-text">
+                  <i class="fas fa-utensils dark-grey-text" aria-hidden="true"></i> {{ data.lunch }} Lunch
+               </p>
+            </div>
+            <div class="col-lg-4 col-md-12 text-center">
+               <p class="dark-grey-text">
+                  {% if data.wifi == 1 %}
+                  <i class="fas fa-wifi dark-grey-text"></i> Wi-Fi <i class="fas fa-check green-text"></i>
+                  {% else %}
+                  <i class="fas fa-wifi dark-grey-text"></i> Wi-Fi <i class="fas fa-times red-text"></i>
+                  {% endif %}
+               </p>
+            </div>
+         </div>
+         <hr>
+         <div class="col-12 text-center">
+            <form action="{{ url_for('views.room_book') }}" method="GET">
+               <input type="hidden" name="room_id" value="{{ data.id }}">
+               <button type="submit" class="btn btn-info btn-md font-weight-bold btn-rounded waves-effect waves-light">
+                  <strong>Book Now</strong>
+               </button>
+            </form>
+            </a>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+{% endblock content %}

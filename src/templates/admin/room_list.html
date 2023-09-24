@@ -1,0 +1,159 @@
+{% extends "admin/base.html" %}
+{% block title %}B&B | Admin{% endblock title %}
+{% block body_content %}
+
+<div id="main">
+<div class="row">    
+<div class="col s12">
+<div class="container">
+<!--page content :start-->
+<section>
+<div class="row">
+  <div class="col s12">
+    <div id="input-fields" class="card card-tabs">
+      <div class="card-content">
+        <div class="card-title">
+          <div class="row">
+            <div class="col s12 m6 l10">
+              <h4 class="card-title red-text">Room Management</h4>
+              <div class="divider"></div>
+              <br>
+            </div>
+           </div>
+        </div>
+        <div id="view-input-fields" class="active">
+<div class="row">
+<div class="col s12">
+<button class="btn modal-trigger right green" data-target="add_room">Add</button>
+<style>
+td{
+  padding: 0;
+  padding-top: 8px;
+}
+</style>
+<table class="col s12 highlight">
+  <thead class="black-text">
+    <tr>
+      <th>#</th>
+      <th>Thumbnail</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Bed</th>
+      <th>Wifi</th>
+      <th>Lunch</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+{% if room_data %}
+{% for room in room_data %}
+<tr>
+  <td>{{ room.id }}</td>
+  <td><img src="{{ url_for('static', filename='img/admin_rooms/') }}{{ room.thumb }}" class="responsive-img z-depth-1" width="70px"></td>
+  <td>{{ room.title }}</td>
+  <td>&euro;{{ room.price }}</td>
+  <td>{{ room.bed }}</td>
+{% if room.wifi == 0 %}
+<td><span class="red-text">No</span></td>
+{% elif room.wifi == 1 %}
+<td><span class="green-text">Yes</span></td>
+{% endif %}
+  <td>{{ room.lunch }} times</td>
+  <td>
+  <form action="{{ url_for('views.room_delete') }}" method="POST" style="display: inline-block;">
+    <input type="hidden" name="del_room_id" value="{{ room.id }}">
+    <button type="submit" class="btn-floating btn-small red"><i class="fas fa-trash-alt"></i></button>
+  </form>
+ </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td class="orange-text text-darken-2 center">no room available!</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+{% endif %}
+  </tbody>
+</table>              
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--page content :end-->
+</div>
+</div>
+</div>
+</div>
+
+<!-- add modal -->
+<div id="add_room" class="modal" tabindex="0" style="z-index: 1003; display: none; opacity: 0; top: 4%; transform: scaleX(0.8) scaleY(0.8);">
+<div class="modal-content">
+<form action="{{ url_for('views.admin_room') }}" method="POST" enctype="multipart/form-data">
+<div class="row">
+<div class="input-field col s6">
+    <label for="title">Title</label>
+    <input type="text" name="title" class="validate" required>
+  </div>
+  <div class="input-field col s6">
+    <label for="description">Price</label>
+    <input type="tel" name="price" class="validate" required>
+  </div>
+  <div class="input-field col s12">
+    <label for="description">Description</label>
+    <textarea name="description" class="materialize-textarea" required></textarea>
+  </div>
+  <div class="input-field col s4">
+    <label for="bed">Bed</label>
+    <input type="number" name="bed" class="validate" required>
+  </div>
+  <div class="col s4">
+  	<span>Wifi</span>
+    <p>
+      <label>
+        <input name="wifi" type="radio" value="1" checked>
+        <span>Yes</span>
+      </label>
+      <label>
+        <input name="wifi" type="radio" value="0">
+        <span>No</span>
+      </label>
+    </p>
+  </div>
+  <div class="input-field col s4">
+    <select name="lunch" required>
+      <option disabled selected>Choose option</option>
+      <option value="1">1 times</option>
+      <option value="2">2 times</option>
+      <option value="3">3 times</option>
+      <option value="4">4 times</option>
+      <option value="5">5 times</option>
+    </select>
+    <label>Lunch</label>
+  </div>
+<div class="col l6 m6 s12">
+<img src="{{ url_for('static', filename='img/preview_demo.png') }}" id="img_view" class="z-depth-1" style="max-width: 13.5rem; display: block;">
+<input type="file" name="thumbnail" id="img_input" style="margin: 13px 0 0 0;">
+</div>
+
+</div>
+</div>
+<div class="divider"></div>
+<div class="modal-footer">
+<a class="modal-close waves-effect btn red">Cancel</a>
+<button type="submit" class="btn waves-effect add_resume_btn">Add</button>
+</div>
+</form>
+</div>
+
+{% endblock body_content %}

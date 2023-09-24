@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>{% block title %}{% endblock title %}</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/materialUI.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/tiny-slider.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body class="intro-page transport-lp">
+
+{% block content %}
+{% endblock content %}
+
+<footer class="page-footer mdb-color darken-3 text-center text-md-left pt-5">
+
+    <!--Footer Links-->
+    <div class="container mb-3">
+
+      <!--First row-->
+      <div class="row">
+
+        <!--First column-->
+        <div class="col-md-4 mt-1 mb-1 wow fadeIn" data-wow-delay="0.3s">
+          <!--About-->
+          <h5 class="title mb-4 font-weight-bold">ABOUT COMPANY</h5>
+
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quibusdam eum odit impedit ipsum odio, ipsa dolore, nihil distinctio voluptate repellat, suscipit! Autem, incidunt debitis.</p>
+
+          <div class="footer-socials mt-2">
+
+            <!--Facebook-->
+            <a type="button" class="btn-floating  btn-primary"><i class="fab fa-facebook-f"></i></a>
+            <!--Dribbble-->
+            <a type="button" class="btn-floating  btn-danger-2"><i class="fab fa-dribbble"></i></a>
+            <!--Twitter-->
+            <a type="button" class="btn-floating  btn-cyan"><i class="fab fa-twitter"></i></a>
+            <!--Google +-->
+            <a type="button" class="btn-floating  btn-danger"><i class="fab fa-google-plus-g"></i></a>
+
+          </div>
+        </div>
+        <!--/First column-->
+
+        <hr class="w-100 clearfix d-md-none">
+
+        <!--Second column-->
+        <div class="col-lg-3 ml-lg-auto col-md-4 mt-1 mb-1 wow fadeIn" data-wow-delay="0.3s">
+          <!--Search-->
+          <h5 class="text-uppercase mb-4 font-weight-bold">Pages</h5>
+          <p class="mb-1"><a href="{{ url_for('views.home') }}">Home</a></p>
+          <p class="mb-1"><a href="{{ url_for('views.rooms') }}">Rooms</a></p>
+          <p class="mb-1"><a href="{{ url_for('views.contact') }}">Contact</a></p>
+          <p class="mb-1"><a href="{{ url_for('views.user_dashboard') }}">Accounts</a></p>
+
+        </div>
+        <!--/Second column-->
+
+        <hr class="w-100 clearfix d-md-none">
+
+        <!--Third column-->
+        <div class="col-lg-3 ml-lg-auto col-md-4 mt-1 mb-1 wow fadeIn" data-wow-delay="0.3s">
+          <!--Contact-->
+          <h5 class="text-uppercase mb-4 font-weight-bold text-center" id="footer_form_title">Get in Touch</h5>
+          <p class="mb-4 text-center" id="footer_form_res"></p>
+          <form id="footer_form">
+            <input type="text" id="full_name" name="full_name" class="form-control mb-2" id="email" name="email" placeholder="Full name" required>
+            <input type="email" id="email" name="email" class="form-control mb-2" placeholder="Email" required>
+                <select name="subject" id="subject" class="browser-default custom-select mb-2" required>
+                    <option disabled selected>Subject</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Request for a room">Request for room</option>
+                    <option value="Other">Other</option>
+                </select>
+              <div class="form-group">
+                    <textarea class="form-control rounded-0" id="message" name="message" rows="3" placeholder="Message" required></textarea>
+              </div>
+              <button type="submit" id="footer_form_btn" class="btn btn-primary btn-block">Send</button>
+          </form>
+
+        </div>
+        <!--/Third column-->
+
+      </div>
+      <!--/First row-->
+
+    </div>
+    <!--/Footer Links-->
+<hr style="background: #757575; margin: 0;">
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+      <div class="container-fluid text-light">&copy; <span id="current_year"></span> Bed & Breakfast <i class="fas fa-utensils"></i> | All Rights Reserved</div>
+    </div>
+    <!--/Copyright-->
+
+</footer>
+<!--/Footer-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/materialUI.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/tiny-slider.js') }}"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+new WOW().init();
+var slider = tns({
+    container: '.home_room_slider',
+    items: 1,
+    controls: false,
+    slideBy: "page",
+    mouseDrag: true,
+    loop: true,
+    rewind: true,
+    autoplay: true,
+    autoplayButtonOutput: false,
+    autoplayTimeout: 3000,
+    navPosition: "bottom",
+    speed: 400,
+    gutter: 15,
+    responsive: {
+        767: {
+            items: 3
+        },
+    },
+});
+</script>
+<script>
+$(document).ready(function(){
+$("#current_year").html(new Date().getFullYear());
+$("#res_div").hide();
+$("#contact_form").on("submit", function(e){
+    e.preventDefault();
+    $("#submit_btn").html("Sending <img src="+ "{{ url_for('static', filename='img/loader.gif') }}" +" style='width: 20px;'>");
+    $("#submit_btn").attr("disabled", true);
+    $.ajax({
+        url: "{{ url_for('views.contact') }}",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(data){
+            $("#res_msg").html(data);
+            $("#contact_form").hide();
+            $("#res_div").show();
+        }
+    });
+});
+});
+</script>
+<script>
+$(document).ready(function(){
+$("#footer_form_res").hide();
+$("#footer_form").on("submit", function(e){
+    e.preventDefault();
+    $("#footer_form_btn").html("Sending <img src="+ "{{ url_for('static', filename='img/loader.gif') }}" +" style='width: 20px;'>");
+    $("#footer_form_btn").attr("disabled", true);
+    $.ajax({
+        url: "{{ url_for('views.home') }}",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(data){
+            $("#footer_form_res").html(data);
+            $("#footer_form_title").hide();
+            $("#footer_form_res").show();
+            $("#footer_form")[0].reset();
+            $("#footer_form_btn").html("Send");
+            $("#footer_form_btn").attr("disabled", false);
+        }
+    });
+});
+});
+</script>
+<script>
+$(document).ready(function(){
+  $("#password, #password2").keyup(validate);
+  $("#set_new_pass_btn").attr("disabled", true);
+
+function validate() {
+  var password = $("#password").val();
+  var password2 = $("#password2").val();
+ 
+    if(password == password2){
+       $("#match_res").html("<span class='text-success'>Password matched</span>");
+       $("#set_new_pass_btn").attr("disabled", false);
+    }
+    else{
+        $("#match_res").html("<span class='text-danger'>Confirm password didn't match!</span>");
+        $("#set_new_pass_btn").attr("disabled", true);
+    }
+}
+});
+</script>
+{% block script %}{% endblock script %}
+</body>
+</html>

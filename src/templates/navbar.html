@@ -1,0 +1,69 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('views.home') }}"><strong>Bed &amp; Breakfast <i class="fas fa-utensils"></i></strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+          <!--Links-->
+          <ul class="navbar-nav ml-auto smooth-scroll">
+{% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('views.rooms') }}">Rooms</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('views.contact') }}">Contact</a>
+            </li>
+{% if user.role == 0 %}
+            <li class="nav-item avatar">
+              <a class="nav-link p-0 ml-5" href="{{ url_for('views.user_dashboard') }}" title="Profile">
+                <span class="yellow-text">Hi, </span>{{ user.fname }}
+                <img src="{{ url_for('static', filename='img/user_avatars/') }}{{ user.avatar }}" class="rounded-circle z-depth-0" style="width: 40px; height: 40px;">
+              </a>
+            </li>
+{% else %}
+            <li class="nav-item avatar">
+              <a class="nav-link p-0 ml-5" href="{{ url_for('views.admin_dashboard') }}" title="Profile">
+                <span class="yellow-text">Hi, </span>{{ user.fname }}
+                <img src="{{ url_for('static', filename='img/user_avatars/') }}{{ user.avatar }}" class="rounded-circle z-depth-0" style="width: 40px; height: 40px;">
+              </a>
+            </li>
+{% endif %}
+            <li class="nav-item ml-3 mt-2">
+              <a class="text-white" title="Logout" data-toggle="modal" data-target="#user_logout">
+                <i class="fas fa-sign-out-alt fa-lg"></i>
+              </a>
+            </li>
+{% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('views.rooms') }}">Rooms</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('views.contact') }}">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-primary btn-sm" href="{{ url_for('auth.login') }}"><i class="fas fa-user"></i> Sign in</a>
+            </li>
+{% endif %}
+          </ul>
+        </div>
+      </div>
+</nav>
+
+<div class="modal fade" id="user_logout" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body font-weight-bold text-center">Do you want to logout?</div>
+      <div class="modal-footer d-inline">
+        <button type="button" class="btn btn-danger btn-rounded btn-md w-25" data-dismiss="modal">No</button>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-primary btn-rounded btn-md float-right w-25">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>

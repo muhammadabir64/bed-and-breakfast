@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}B&B{% endblock title %}
+{% include "navbar.html" %}
+{% block content %}
+
+<div class="container" style="margin-top: 100px;">
+<div class="row my-5">
+
+<div class="card p-4 ">
+    <h3 class="font-weight-bold text-center text-info">Pay &amp; Reserve Now</h3>
+    <hr class="mb-5 mx-auto" width="25px">
+<div class="row">
+<div class="col-lg-6 mb-4">
+<img src="{{ url_for('static', filename='img/admin_rooms/') }}{{ room_data.thumb }}" class="img-fluid rounded z-depth-2">
+</div>
+<div class="col-lg-5 text-center text-md-left">
+<div class="mb-4">
+  <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+    <strong>{{ room_data.title }}</strong>
+  </h2>
+  <h3 class="h3-responsive text-center text-md-left ml-xl-0 ml-4">
+    <span class="red-text font-weight-bold">
+      <strong>&euro;{{ room_data.price }}</strong>
+    </span>
+  </h3>
+  <small><i class="fas fa-bed"></i> {{ room_data.bed }} Bed</small>
+</div>
+<div class="card-body">{{ room_data.description }}</div>
+<div class="col-12 mt-4">
+<form action="{{ url_for('views.room_book_confirm') }}" method="GET">
+    <div class="row">
+      <div class="col-6 text-center">
+        <small>Check in</small>
+        <input type="date" name="check_in" class="form-control" required>
+      </div>
+      <div class="col-6 text-center">
+        <small>Check out</small>
+        <input type="date" name="check_out" class="form-control" required>
+      </div>
+<div class="col-12 text-danger">
+{% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+{{ message }}
+{% endif %} {% endfor %} {% endif %} {% endwith %}
+</div>
+    </div>
+</div>
+<input type="hidden" name="room_id" value="{{ room_data.id }}">
+<input type="hidden" name="user_id" value="{{ user.id }}">
+        <section>
+          <div class="mt-5">
+            <div class="row mt-3">
+              <div class="col-md-12 text-center text-md-left text-md-right">
+<button type="submit" class="btn btn-primary btn-rounded">
+<i class="fas fa-cart-plus mr-2" aria-hidden="true"></i> Proceed to Pay</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+      </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock content %}
